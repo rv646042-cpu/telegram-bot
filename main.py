@@ -1,21 +1,18 @@
-import telebot
+from telebot import TeleBot, types
 
+# 👇 Yaha apna token paste kar
 TOKEN = "8242252445:AAH_NHbTNtxfUNqB6d-AiaqR5QvKNdBPKNg"
-bot = telebot.TeleBot(TOKEN)
 
-# /start command
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-    bot.reply_to(message, "Hello! Bot chal raha hai 🚀")
+bot = TeleBot(TOKEN, parse_mode="HTML")
 
-# /help command
-@bot.message_handler(commands=['help'])
-def send_help(message):
-    bot.reply_to(message, "Commands:\n/start - Bot start karo\n/help - Help lo\n/about - Bot ke baare me")
+# Channel join request auto-accept
+@bot.chat_join_request_handler()
+def join_request(update: types.ChatJoinRequest):
+    chat_id = update.chat.id
+    user_id = update.from_user.id
 
-# /about command
-@bot.message_handler(commands=['about'])
-def send_about(message):
-    bot.reply_to(message, "Ye ek demo Telegram bot hai, jo Python me bana hai 🐍")
+    bot.approve_chat_join_request(chat_id, user_id)  # Accept request
+    bot.send_message(chat_id, f"✅ Welcome @{update.from_user.username or 'friend'}!")
 
-bot.polling()
+print("🤖 Bot is running...")
+bot.infinity_polling()
