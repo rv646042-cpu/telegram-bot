@@ -1,6 +1,6 @@
 import telebot
 
-TOKEN = "YahaTumharaBotToken"   # apna token paste karo
+TOKEN = "8242252445:AAH_NHbTNtxfUNqB6d-AiaqR5QvKNdBPKNg"   # apna token paste karo
 bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start'])
